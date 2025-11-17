@@ -1,0 +1,80 @@
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import type { Product } from "../types/types";
+
+export interface CartItem extends Product {
+  count: number;
+}
+
+interface CartState {
+  items: CartItem[];
+}
+
+// Load cart from sessionStorage safely
+const loadCart = (): CartItem[] => {
+  try {
+    const raw = sessionStorage.getItem("cart");
+    return raw ? (JSON.parse(raw) as CartItem[]) : [];
+  } catch {
+    return [];
+  }
+};
+
+const initialState: CartState = {
+  items: loadCart(),
+};
+
+const cartSlice = createSlice({
+  name: "cart",
+  initialState,
+  reducers: {
+    addToCart: (state, action: PayloadAction<Product>) => {
+      const existingItem = state.items.find(
+        (item) => item.id === action.payload.id
+      );
+
+      if (existingItem) {
+        existingItem.count += 1;
+      } else {
+        state.items.push({ ...action.payload, count: 1 });
+      }
+
+      sessionStorage.setItem("cart", JSON.stringify(state.items));
+    },
+
+    removeFromCart: (state, action: PayloadAction<number>) => {
+      state.items = state.items.filter(
+        (cartItem) => cartItem.id !== action.payload
+      );
+
+      sessionStorage.setItem("cart", JSON.stringify(state.items));
+    },
+
+    updateCart: (
+      state,
+      action: PayloadAction<{ id: number; count: number }>
+    ) => {
+      const { id, count } = action.payload;
+      const targetItem = state.items.find((item) => item.id === id);
+
+      if (targetItem) {
+        if (count > 0) {
+          targetItem.count = count;
+        } else {
+          state.items = state.items.filter((item) => item.id !== id);
+        }
+      }
+
+      sessionStorage.setItem("cart", JSON.stringify(state.items));
+    },
+
+    clearCart: (state) => {
+      state.items = [];
+      sessionStorage.removeItem("cart");
+    },
+  },
+});
+
+export const { addToCart, removeFromCart, updateCart, clearCart } =
+  cartSlice.actions;
+
+export default cartSlice.reducer;
