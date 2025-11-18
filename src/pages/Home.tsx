@@ -10,7 +10,6 @@ const Home: React.FC = () => {
   const navigate = useNavigate();
   const { products, selectedCategory, dispatch } = useProductContext();
 
-  // Fetch products
   const { data: productsData, isLoading } = useQuery({
     queryKey: ["products"],
     queryFn: fetchProducts,
@@ -22,20 +21,17 @@ const Home: React.FC = () => {
     }
   }, [productsData, dispatch]);
 
-  // Fetch categories
   const { data: categories } = useQuery({
     queryKey: ["categories"],
     queryFn: fetchCategories,
   });
 
-  // Filter logic
   const filteredProducts = selectedCategory
     ? products.filter((p: Product) => p.category === selectedCategory)
     : products;
 
   return (
     <div>
-      {/* Category Filter */}
       <select
         onChange={(e) =>
           dispatch({
@@ -47,7 +43,6 @@ const Home: React.FC = () => {
       >
         <option value="">All Categories</option>
 
-        {/* FIXED HERE */}
         {categories?.map((category: string) => (
           <option value={category} key={category}>
             {category}
@@ -70,7 +65,6 @@ const Home: React.FC = () => {
 
       {isLoading && <h1>Loading...</h1>}
 
-      {/* Product list */}
       <div className="d-flex flex-wrap gap-3 justify-content-center mt-4">
         {filteredProducts.map((product: Product) => (
           <ProductCard key={product.id} product={product} />

@@ -3,7 +3,6 @@ import type { Product } from "../types/types";
 import { useAppDispatch } from "../redux/hooks";
 import { addToCart } from "../redux/cartSlice";
 
-// ⭐ Simple fallback-safe star rating
 const StarRating = ({ rate }: { rate: number }) => {
   const safeRate = Number.isFinite(rate) ? Math.round(rate) : 0;
 

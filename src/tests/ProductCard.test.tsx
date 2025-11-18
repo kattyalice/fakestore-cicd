@@ -3,7 +3,6 @@ import ProductCard from "../components/ProductCard";
 import { useAppDispatch } from "../redux/hooks";
 import { addToCart } from "../redux/cartSlice";
 
-// mock dispatcher
 jest.mock("../redux/hooks", () => ({
   useAppDispatch: jest.fn(),
 }));

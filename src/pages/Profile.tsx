@@ -11,7 +11,6 @@ const Profile: React.FC = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  // If user is not logged in
   if (!user) {
     return (
       <h2 className="error text-center mt-5">
@@ -26,7 +25,6 @@ const Profile: React.FC = () => {
     setSuccess("");
 
     try {
-      // React 19 strict mode safe check
       if (!user) return;
 
       await updateProfile(user, { displayName });
@@ -51,7 +49,6 @@ const Profile: React.FC = () => {
       await deleteUser(user);
       setSuccess("Account deleted successfully.");
 
-      // After deletion, Firebase logs user out → let UI update naturally
     } catch (err: any) {
       setError(err.message);
     }

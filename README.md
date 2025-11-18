@@ -1,73 +1,9 @@
-# React + TypeScript + Vite
+This e-commerce project was built using React, TypeScript, Redux, and Firebase Authentication, with the main goal of showing how a modern web app can use Test-Driven Development together with a fully automated CI/CD pipeline. The idea behind the project was not just to create pages that work, but to prove that every important part of the application is reliable, tested, and deployed through an automated workflow.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+To follow TDD, I wrote unit tests for individual components before finalizing their behavior. For example, the Logout component includes a test to make sure the Firebase signOut function runs and the text appears on the screen. The ProductCard component also has its own unit test that checks that it renders correctly and that clicking “Add to cart” actually dispatches the correct Redux action. After the unit tests were in place, I created an integration test to confirm that the Cart updates when a user adds a product. This test simulates a real interaction—clicking the button—and checks how multiple parts of the app work together, which is exactly what an integration test should do.
 
-Currently, two official plugins are available:
+Along with testing, the project includes a complete Continuous Integration and Continuous Deployment (CI/CD) setup using GitHub Actions and Vercel. A main.yml workflow file was created in the .github/workflows folder to automate the process. Every time code is pushed to the main branch, GitHub Actions automatically installs dependencies, builds the project, and runs the tests. If anything fails, the workflow stops so that broken code never gets deployed. If everything passes, GitHub Actions uses the Vercel CLI to automatically deploy the newest version of the app. A Vercel token stored securely in GitHub Secrets allows the deployment process to run without exposing sensitive information.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The application itself includes all the pieces needed for a basic store: a Home page, product listings, a cart system managed by Redux, and user authentication using Firebase. Login, Register, and Logout are fully supported, and protected routes ensure only logged-in users can access certain pages. React Query is used for fetching product data, while contexts and routing help organize the structure of the app.
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Altogether, this project demonstrates how to combine React development with real testing, and how to use CI/CD to create a smooth and reliable deployment pipeline. The process ensures that the app not only works but continues to work as changes are made, which is the main goal of TDD and automated workflows.

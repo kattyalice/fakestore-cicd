@@ -34,7 +34,6 @@ const Cart: React.FC = () => {
             {cartItems.map((item) => (
               <li className="list-group-item" key={item.id}>
                 <div className="row align-items-center">
-                  {/* Image */}
                   <div className="col">
                     <img
                       src={item.image}
@@ -44,13 +43,11 @@ const Cart: React.FC = () => {
                     />
                   </div>
 
-                  {/* Title + price */}
                   <div className="col">
                     <div>{item.title}</div>
                     <div>${item.price}</div>
                   </div>
 
-                  {/* Minus button */}
                   <div className="col">
                     <button
                       className="btn btn-secondary btn-sm"
@@ -64,7 +61,6 @@ const Cart: React.FC = () => {
                     </button>
                   </div>
 
-                  {/* Remove button */}
                   <div className="col">
                     <button
                       className="btn btn-danger btn-sm"
@@ -78,13 +74,11 @@ const Cart: React.FC = () => {
             ))}
           </ul>
 
-          {/* Totals */}
           <div className="mt-4 d-flex justify-content-between">
             <h5>Total items: {totalItems}</h5>
             <h5>Cart price: ${totalPrice}</h5>
           </div>
 
-          {/* Checkout */}
           <div className="text-end mt-3">
             <button className="btn btn-success" onClick={() => setShowModal(true)}>
               Checkout
@@ -93,7 +87,6 @@ const Cart: React.FC = () => {
         </>
       )}
 
-      {/* Custom Modal (not react-bootstrap) */}
       {showModal && (
         <div
           className="modal fade show"
@@ -134,7 +127,6 @@ const Cart: React.FC = () => {
         </div>
       )}
 
-      {/* Success message */}
       {checkedOut && (
         <div className="alert alert-success mt-3">
           Thank you for your order. Cart is now clear.

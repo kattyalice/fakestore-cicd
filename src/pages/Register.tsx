@@ -16,7 +16,6 @@ const Register = () => {
     e.preventDefault();
     setError("");
 
-    // Basic client-side validation (prevents Firebase error spam)
     if (!email || !password || !displayName) {
       setError("All fields are required.");
       return;
@@ -35,7 +34,6 @@ const Register = () => {
 
       navigate("/profile");
     } catch (err: any) {
-      // Firebase errors are very ugly — this cleans them a bit
       const msg = err?.message?.replace("Firebase:", "").trim();
       setError(msg || "Registration failed.");
     }
@@ -45,7 +43,6 @@ const Register = () => {
     <div className="form">
       <h1>Register</h1>
 
-      {/* Top-level error message for better UX */}
       {error && <p className="error">{error}</p>}
 
       <form onSubmit={handleSubmit}>

@@ -9,7 +9,6 @@ interface CartState {
   items: CartItem[];
 }
 
-// Load cart from sessionStorage safely
 const loadCart = (): CartItem[] => {
   try {
     const raw = sessionStorage.getItem("cart");

@@ -3,7 +3,6 @@ import { render, screen } from "@testing-library/react";
 import Logout from "../pages/Logout";
 import { signOut } from "firebase/auth";
 
-// Mock Firebase auth
 jest.mock("firebase/auth", () => ({
   signOut: jest.fn(),
   getAuth: () => ({})

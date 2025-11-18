@@ -33,17 +33,13 @@ describe("Cart Integration Test", () => {
       </Provider>
     );
 
-    // Click button
     fireEvent.click(screen.getByText("Add to cart"));
 
-    // Product name appears TWICE (ProductCard + Cart)
     const titles = screen.getAllByText("Integration Test Product");
     expect(titles.length).toBeGreaterThanOrEqual(2);
 
-    // Price appears in Cart
     expect(screen.getAllByText("$12.5").length).toBeGreaterThanOrEqual(1);
 
-    // Total items
     expect(screen.getByText(/Total items: 1/)).toBeInTheDocument();
   });
 });
